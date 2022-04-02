@@ -1,0 +1,188 @@
+conda info --envs
+conda activate qiime2-2021.11
+
+mkdir ./mouse_tutorial
+cd ./mouse_tutorial
+
+wget \
+  -O "metadata.tsv" \
+  "https://data.qiime2.org/2022.2/tutorials/pd-mice/sample_metadata.tsv"
+
+qiime metadata tabulate \
+  --m-input-file metadata.tsv \
+  --o-visualization metadata.qzv
+
+wget \
+  -O "manifest.tsv" \
+  "https://data.qiime2.org/2022.2/tutorials/pd-mice/manifest"
+
+wget \
+  -O "demultiplexed_seqs.zip" \
+  "https://data.qiime2.org/2022.2/tutorials/pd-mice/demultiplexed_seqs.zip"
+
+unzip demultiplexed_seqs.zip
+
+head manifest.tsv
+
+qiime tools import \
+  --type "SampleData[SequencesWithQuality]" \
+  --input-format SingleEndFastqManifestPhred33V2 \
+  --input-path ./manifest.tsv \
+  --output-path ./demux_seqs.qza
+
+qiime demux summarize --help
+
+qiime demux summarize \
+  --i-data ./demux_seqs.qza \
+  --o-visualization ./demux_seqs.qzv
+
+qiime dada2 denoise-single \
+  --i-demultiplexed-seqs ./demux_seqs.qza \
+  --p-trunc-len 150 \
+  --o-table ./dada2_table.qza \
+  --o-representative-sequences ./dada2_rep_set.qza \
+  --o-denoising-stats ./dada2_stats.qza
+
+qiime metadata tabulate \
+  --m-input-file ./dada2_stats.qza  \
+  --o-visualization ./dada2_stats.qzv
+
+qiime feature-table summarize \
+  --i-table ./dada2_table.qza \
+  --m-sample-metadata-file ./metadata.tsv \
+  --o-visualization ./dada2_table.qzv
+
+wget \
+  -O "sepp-refs-gg-13-8.qza" \
+  "https://data.qiime2.org/2022.2/common/sepp-refs-gg-13-8.qza"
+
+qiime fragment-insertion sepp \
+  --i-representative-sequences ./dada2_rep_set.qza \
+  --i-reference-database sepp-refs-gg-13-8.qza \
+  --o-tree ./tree.qza \
+  --o-placements ./tree_placements.qza \
+  --p-threads 1  # update to a higher number if you can
+
+qiime diversity alpha-rarefaction \
+  --i-table ./dada2_table.qza \
+  --m-metadata-file ./metadata.tsv \
+  --o-visualization ./alpha_rarefaction_curves.qzv \
+  --p-min-depth 10 \
+  --p-max-depth 4250
+
+qiime diversity core-metrics-phylogenetic \
+  --i-table ./dada2_table.qza \
+  --i-phylogeny ./tree.qza \
+  --m-metadata-file ./metadata.tsv \
+  --p-sampling-depth 2000 \
+  --output-dir ./core-metrics-results
+
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity ./core-metrics-results/faith_pd_vector.qza \
+  --m-metadata-file ./metadata.tsv \
+  --o-visualization ./core-metrics-results/faiths_pd_statistics.qzv
+
+qiime diversity alpha-group-significance \
+ --i-alpha-diversity ./core-metrics-results/evenness_vector.qza \
+ --m-metadata-file ./metadata.tsv \
+ --o-visualization ./core-metrics-results/evenness_statistics.qzv
+
+qiime longitudinal anova \
+  --m-metadata-file ./core-metrics-results/faith_pd_vector.qza \
+  --m-metadata-file ./metadata.tsv \
+  --p-formula 'faith_pd ~ genotype * donor_status' \
+  --o-visualization ./core-metrics-results/faiths_pd_anova.qzv
+
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
+  --m-metadata-file metadata.tsv \
+  --m-metadata-column donor \
+  --o-visualization core-metrics-results/unweighted-unifrac-donor-significance.qzv
+
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file metadata.tsv \
+  --m-metadata-column donor \
+  --o-visualization core-metrics-results/weighted-unifrac-donor-significance.qzv
+
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
+  --m-metadata-file metadata.tsv \
+  --m-metadata-column cage_id \
+  --o-visualization core-metrics-results/unweighted-unifrac-cage-significance.qzv \
+  --p-pairwise
+
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file metadata.tsv \
+  --m-metadata-column cage_id \
+  --o-visualization core-metrics-results/weighted-unifrac-cage-significance.qzv \
+  --p-pairwise
+
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file metadata.tsv \
+  --m-metadata-column cage_id \
+  --o-visualization core-metrics-results/weighted-unifrac-cage-significance_disp.qzv \
+  --p-method permdisp
+
+qiime diversity adonis \
+  --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
+  --m-metadata-file metadata.tsv \
+  --o-visualization core-metrics-results/unweighted_adonis.qzv \
+  --p-formula genotype+donor
+
+##Taxonomic classification
+
+wget \
+  -O "gg-13-8-99-515-806-nb-classifier.qza" \
+  "https://data.qiime2.org/2022.2/common/gg-13-8-99-515-806-nb-classifier.qza"
+
+qiime feature-classifier classify-sklearn \
+  --i-reads ./dada2_rep_set.qza \
+  --i-classifier ./gg-13-8-99-515-806-nb-classifier.qza \
+  --o-classification ./taxonomy.qza
+
+qiime metadata tabulate \
+  --m-input-file ./taxonomy.qza \
+  --o-visualization ./taxonomy.qzv
+
+qiime feature-table tabulate-seqs \
+  --i-data ./dada2_rep_set.qza \
+  --o-visualization ./dada2_rep_set.qzv
+
+qiime feature-table filter-samples \
+  --i-table ./dada2_table.qza \
+  --p-min-frequency 2000 \
+  --o-filtered-table ./table_2k.qza
+
+qiime taxa barplot \
+  --i-table ./table_2k.qza \
+  --i-taxonomy ./taxonomy.qza \
+  --m-metadata-file ./metadata.tsv \
+  --o-visualization ./taxa_barplot.qzv
+
+qiime feature-table filter-features \
+  --i-table ./table_2k.qza \
+  --p-min-frequency 50 \
+  --p-min-samples 4 \
+  --o-filtered-table ./table_2k_abund.qza
+
+qiime composition add-pseudocount \
+  --i-table ./table_2k_abund.qza \
+  --o-composition-table ./table2k_abund_comp.qza
+
+qiime composition ancom \
+  --i-table ./table2k_abund_comp.qza \
+  --m-metadata-file ./metadata.tsv \
+  --m-metadata-column donor \
+  --o-visualization ./ancom_donor.qzv
+
+qiime composition ancom \
+  --i-table ./table2k_abund_comp.qza \
+  --m-metadata-file ./metadata.tsv \
+  --m-metadata-column genotype \
+  --o-visualization ./ancom_genotype.qzv
+
+
+
