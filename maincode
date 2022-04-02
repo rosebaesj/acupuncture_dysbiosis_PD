@@ -1,0 +1,13 @@
+conda info --envs
+conda activate qiime2-2021.11
+
+mkdir ./mouse_tutorial
+cd ./mouse_tutorial
+
+wget \
+  -O "metadata.tsv" \
+  "https://data.qiime2.org/2022.2/tutorials/pd-mice/sample_metadata.tsv"
+
+qiime metadata tabulate \
+  --m-input-file metadata.tsv \
+  --o-visualization metadata.qzv
