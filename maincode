@@ -11,3 +11,23 @@ wget \
 qiime metadata tabulate \
   --m-input-file metadata.tsv \
   --o-visualization metadata.qzv
+
+wget \
+  -O "manifest.tsv" \
+  "https://data.qiime2.org/2022.2/tutorials/pd-mice/manifest"
+
+wget \
+  -O "demultiplexed_seqs.zip" \
+  "https://data.qiime2.org/2022.2/tutorials/pd-mice/demultiplexed_seqs.zip"
+
+unzip demultiplexed_seqs.zip
+
+head manifest.tsv
+
+qiime tools import \
+  --type "SampleData[SequencesWithQuality]" \
+  --input-format SingleEndFastqManifestPhred33V2 \
+  --input-path ./manifest.tsv \
+  --output-path ./demux_seqs.qza
+
+qiime demux summarize --help
