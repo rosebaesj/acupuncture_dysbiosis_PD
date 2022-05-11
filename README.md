@@ -33,3 +33,7 @@ qiime 분석에서 진행하고자 하는 것은 다음과 같습니다
 본 분석은 qiime tutorial 중 [pd-mice](https://docs.qiime2.org/2022.2/tutorials/pd-mice/)를 mainstream으로 하여 진행하였음
 
 파이팅!
+
+
+Repository 만드는 법
+https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=youngjin426&logNo=221577936379
