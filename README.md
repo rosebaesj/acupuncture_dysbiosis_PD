@@ -37,3 +37,6 @@ qiime 분석에서 진행하고자 하는 것은 다음과 같습니다
 
 Repository 만드는 법
 https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=youngjin426&logNo=221577936379
+
+Token 만드는 법
+https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/
