@@ -1,6 +1,6 @@
-## acupuncture_dysbiosis_PD
+## HowtoGit
 
-Readme file은 일종의 소개글 입니다.
+지금 보시는 Readme file은 일종의 소개글 입니다.
 
 유튜버 [동빛나](https://www.youtube.com/watch?v=MFJIOqxK6k8) 를 참고하여 진행했습니다.
 위 처럼 링크를 삽입할수도 있습니다.
@@ -30,14 +30,6 @@ qiime 분석에서 진행하고자 하는 것은 다음과 같습니다
 * Feature Table, Representative Sequences
 * ???
 
-본 분석은 qiime tutorial 중 [pd-mice](https://docs.qiime2.org/2022.2/tutorials/pd-mice/)를 mainstream으로 하여 진행하였음
-
 파이팅!
 
 
-Repository 만드는 법
-https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=youngjin426&logNo=221577936379
-
-Token 만드는 법
-https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/
-https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
