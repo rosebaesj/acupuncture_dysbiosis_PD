@@ -43,6 +43,9 @@ library(gitcreds)
 gitcreds_set()
 ~~~~~~~
   이렇게 치면 token을 입력하는 란이 뜨니까 복사해놨던 것 입력ㄲ.<br/>
+        이 과정은 없어도 RStudio 우측 하단의 작업 공간에서 바로 불러올 수 있다!
+  
+  
   
 #### 4. R code Github에 commit & push 하기
   R code 생성 및 편집은 same. 문제는 이렇게 내 컴퓨터에서 저장한 것을 git에 반영하는 것! <br/>
