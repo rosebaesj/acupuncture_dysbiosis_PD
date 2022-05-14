@@ -75,7 +75,7 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 왜 수정한 것도 별로 없는데 이런 문제가 발생하는 건지 잘 모르겠음 ㅠㅠ\
 ~~~~~~
 $ git pull --rebase
-~~~~~
+~~~~~~~
 이후에 push 하면 잘됨.
 혹은 forced push를 하는 방법도 있는데 이거는 파일이 없어지는 경우가 종종있나봄
 
