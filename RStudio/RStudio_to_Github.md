@@ -60,6 +60,24 @@ gitcreds_set()
 $ git push origin +main
 ~~~~~~~
   하면 호로록 된다.
+#### 5. 자주 발생하는 문제
+기본적으로 pull을 하고 그 다음에 작업을 진행하고 commit, push해야하는데, push 과정에서 아래와 같은 오류 자주 발생
+~~~~~
+error: failed to push some refs to 'https://github.com/rosebaesj/AD_Microbiome_R.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+~~~~~
+이런 경우는 commit이 꼬여서? 발생하는 것 같음. \
+이럴때는 commit을 한줄로만 정리해주는 rebase 방법을 사용해야함.\
+잔가지들은 쳐지는 효과인것 같은데 \
+왜 수정한 것도 별로 없는데 이런 문제가 발생하는 건지 잘 모르겠음 ㅠㅠ\
+~~~~~~
+$ git pull --rebase
+~~~~~
+이후에 push 하면 잘됨.
+혹은 forced push를 하는 방법도 있는데 이거는 파일이 없어지는 경우가 종종있나봄
 
 ## 끝!
 
