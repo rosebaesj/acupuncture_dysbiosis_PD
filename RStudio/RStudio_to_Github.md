@@ -37,11 +37,12 @@ RStudio 작업 및 R code를 Github로 연동시키는 방법들에 대하여 �
   So 이 token을 RStudio에 저장하는 과정이 필요함. <br/>
   R console에서 다음과 같은 과정을 진행하면 됨 <br/>
   
-~~~R~~~
+~~~~~~
 install.packages("gitcreds")
 library(gitcreds)
 gitcreds_set()
 ~~~~~~~
+
   이렇게 치면 token을 입력하는 란이 뜨니까 복사해놨던 것 입력ㄲ.<br/>
   
 #### 4. R code Github에 commit & push 하기
