@@ -132,3 +132,13 @@ git checkout main
 git merge new-branch
 ~~~~~~~~~~~~~~~~~
 
+## 특정 파일을 무시하는 법
+맥 OS에서 작업하는 경우 자동생성되는 파일 등
+
+~~~~~~~~~~~~~~~~~
+$ echo ".DS_Store" >> ~/.gitignore_global
+$ echo "._.DS_Store" >> ~/.gitignore_global
+$ echo "**/.DS_Store" >> ~/.gitignore_global
+$ echo "**/._.DS_Store" >> ~/.gitignore_global
+$ git config --global core.excludesfile ~/.gitignore_global
+~~~~~~~~~~~~~~~~~
