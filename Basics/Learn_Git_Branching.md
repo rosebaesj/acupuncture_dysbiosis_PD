@@ -122,7 +122,7 @@ https://gofnrk.tistory.com/95
 ~~~~~~~~~~~~~~~
 git remote update
 git fetch
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 한 후에 진행 해주면 된다
 
