@@ -99,10 +99,13 @@ git revert HEAD #혹은 HEAD 대신 branch 이름을 적어도 됨
 ~~~~~~~~~~~~
 git cherry-pick C2 C4
 ~~~~~~~~~
+
 그런데 만약 원하는 커밋을 모른다면?
+
 ~~~~~~~~~~~~
 git rebase -i HEAD~4
 ~~~~~~~~~~~~
+
 이렇게하면 이전 4개 HEAD를 대화형(-i)으로 확인가능
 
 
@@ -115,13 +118,17 @@ did not match any file(s) known to git
 라고 뜨는 경우는 완전 신규 브랜치라서 그럼
 https://gofnrk.tistory.com/95
 그런 경우에는 
+
 ~~~~~~~~~~~~~~~
 git remote update
 git fetch
 ~~~~~~~~~~~~~~
+
 한 후에 진행 해주면 된다
+
 ~~~~~~~~~~~~~~~~~
 git checkout new-branch
 git checkout main
 git merge new-branch
 ~~~~~~~~~~~~~~~~~
+
