@@ -98,7 +98,7 @@ git revert HEAD #혹은 HEAD 대신 branch 이름을 적어도 됨
 ## 원하는 commit만 선택적으로 반영하여 넣기
 ~~~~~~~~~~~~
 git cherry-pick C2 C4
-~~~~~~~~~
+~~~~~~~~~~~~~
 
 그런데 만약 원하는 커밋을 모른다면?
 
