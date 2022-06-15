@@ -12,7 +12,7 @@ Verification code
 Move location to 
 ~~~~~~~~~~~~~~~~~
 $ cd n/hpnh/Users/sjbae
-~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 
 # Generate SSH key
