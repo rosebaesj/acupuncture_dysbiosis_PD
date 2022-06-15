@@ -28,6 +28,9 @@ Change directory
 find your project and open
 check if it's connected to Git
 
+# .gitignore files
+Use FileZilla
+
 # Get started!
 
 # Change Theme
