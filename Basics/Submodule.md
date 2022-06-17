@@ -1,6 +1,6 @@
 # Add submodule to secure your data
 adding private directory in a public directory
-
+[Check](https://ohgyun.com/711)
 
 Creat a public directory 
 Creat private directory
